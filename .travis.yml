@@ -1,0 +1,24 @@
+os: linux
+language: python
+python:
+- '3.5'
+cache: pip
+addons:
+  apt:
+    packages:
+    - python3.5
+  homebrew:
+    packages:
+    - squashfs
+    update: true
+sudo: required
+matrix:
+  include:
+  - python: '3.5'
+before_install:
+- sudo apt update && sudo apt upgrade -y && sudo apt install -y libarchive-dev
+- sudo chmod u+x .travis/*.sh
+- "/bin/bash .travis/setup.sh"
+install: pip install --upgrade pip
+script: 
+  - "/bin/bash .travis/build-and-publish.sh biodiverse"
